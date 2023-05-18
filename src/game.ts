@@ -1,19 +1,26 @@
-export const SIGN_X = "x";
-export const SIGN_O = "o";
+export const SIGN_X = 'x'
+export const SIGN_O = 'o'
+
+type GameSign = typeof SIGN_X | typeof SIGN_O
 
 type GameParams = {
-	playerSign?: typeof SIGN_X | typeof SIGN_O;
-};
+	playerSign?: GameSign
+}
 
-export const createGame = (params?: GameParams) => {
-	const config = params ?? {};
-	const { playerSign = "x" } = config;
+type Game = {
+	getPlayerSign: () => GameSign
+	getAiSign: () => GameSign
+}
 
-	const getPlayerSign = () => playerSign;
-	const getAiSign = () => (playerSign === "x" ? "o" : "x");
+export const createGame = (params?: GameParams): Game => {
+	const config = params ?? {}
+	const { playerSign = 'x' } = config
+
+	const getPlayerSign = () => playerSign
+	const getAiSign = () => (playerSign === 'x' ? 'o' : 'x')
 
 	return {
 		getPlayerSign,
 		getAiSign,
-	};
-};
+	}
+}

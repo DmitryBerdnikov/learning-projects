@@ -1,9 +1,11 @@
-import { type Config } from "jest";
+/* eslint-disable import/no-default-export */
+
+import { type Config } from 'jest'
 
 const config: Config = {
 	transform: {
-		"^.+\\.ts$": "ts-jest",
+		'^.+\\.ts$': 'ts-jest',
 	},
-};
+}
 
-export default config;
+export default config

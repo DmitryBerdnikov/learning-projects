@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"noImplicitAny": true,
+		"module": "ESNext",
+		"target": "es5",
+		"jsx": "react-jsx",
+		"allowJs": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"paths": {
+			"@app/*": ["src/app/*"],
+			"@pages/*": ["src/pages/*"],
+			"@widgets/*": ["src/widgets/*"],
+			"@features/*": ["src/features/*"],
+			"@entities/*": ["src/entities/*"],
+			"@shared/*": ["src/shared/*"],
+			"@images/*": ["public/images/*"]
+		}
+	},
+	"ts-node": {
+		"compilerOptions": {
+			"module": "CommonJS"
+		}
+	},
+	"include": ["**/*", "./.storybook/**/*"],
+	"exclude": ["./build", "./fileTransformer.js"]
+}

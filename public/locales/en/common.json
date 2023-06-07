@@ -1,0 +1,21 @@
+{
+  "changeLanguage": "Change language",
+  "currentTheme": "current theme",
+  "header": {
+    "navigation": {
+      "about": "about",
+      "main": "main"
+    }
+  },
+  "loading": "Loading...",
+  "rootError": {
+    "action": "Try to reload the page",
+    "error": "An unknown error occurred"
+  },
+  "themes": {
+    "auto": "auto",
+    "bright": "bright",
+    "dark": "dark",
+    "light": "light"
+  }
+}

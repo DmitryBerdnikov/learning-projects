@@ -1,0 +1,27 @@
+name: Main CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  linters_and_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.5.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.5.0
+      - name: Install
+        run: npm ci
+      - name: Run linter
+        run: npm run lint
+      #  can't set up loki in ci
+      # - name: Test storybook ui
+      #   run: npm run storybook:build && npx loki --requireReference --reactUri file:./storybook-static

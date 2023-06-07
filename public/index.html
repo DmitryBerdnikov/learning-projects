@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400&display=swap"
+		/>
+		<style data-theme="light" media="(prefers-color-scheme: light)">
+			:root {
+				--color-text-primary: var(--color-black);
+				--color-background-primary: var(--color-white);
+			}
+		</style>
+		<style data-theme="dark" media="(prefers-color-scheme: dark)">
+			:root {
+				--color-text-primary: var(--color-white);
+				--color-background-primary: var(--color-black);
+			}
+		</style>
+		<style data-theme="special" media="not all">
+			:root {
+				--color-text-primary: var(--color-fuchsia);
+				--color-background-primary: var(--color-dark-violet);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="root"></div>
+	</body>
+</html>

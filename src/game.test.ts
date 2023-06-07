@@ -25,62 +25,32 @@ describe('players signs', () => {
 	})
 })
 
-describe('game', () => {
-	// TODO: Test fails because of ai move is random, it should be mocked
-	it('should have correct signs in the game board', () => {
+describe('the player wins', () => {
+	it('should be the win by horizontally', () => {
+		// o - -
+		// x x x
+		// - o -
 		const game = createGame()
 
-		game.move(0, 1)
-		let firstRoundAiSignsCount = 0
+		game.movePlayer(0, 1)
+		game.moveAi(0, 0)
 
-		for (let x = 0; x < 3; x += 1) {
-			for (let y = 0; y < 3; y += 1) {
-				if (game.hasAiSign(x, y)) {
-					firstRoundAiSignsCount += 1
-				}
-
-				if (x === 0 && y === 1) {
-					expect(game.hasPlayerSign(x, y)).toBeTruthy()
-
-					continue
-				}
-
-				expect(game.hasPlayerSign(x, y)).toBeFalsy()
-			}
-		}
-
-		expect(firstRoundAiSignsCount).toBe(1)
 		expect(game.getWinner()).toBeNull()
 
-		game.move(1, 1)
-		let secondRoundAiSignsCount = 0
+		game.movePlayer(1, 1)
+		game.moveAi(1, 2)
 
-		for (let x = 0; x < 3; x += 1) {
-			for (let y = 0; y < 3; y += 1) {
-				if (game.hasAiSign(x, y)) {
-					secondRoundAiSignsCount += 1
-				}
-
-				if ((x === 0 && y === 1) || (x === 1 && y === 1)) {
-					expect(game.hasPlayerSign(x, y)).toBeTruthy()
-
-					continue
-				}
-
-				expect(game.hasPlayerSign(x, y)).toBeFalsy()
-			}
-		}
-
-		expect(secondRoundAiSignsCount).toBe(2)
 		expect(game.getWinner()).toBeNull()
 
-		game.move(2, 1)
-		let thirdRoundAiSignsCount = 0
+		game.movePlayer(2, 1)
+		game.moveAi(2, 2)
 
 		for (let x = 0; x < 3; x += 1) {
 			for (let y = 0; y < 3; y += 1) {
-				if (game.hasAiSign(x, y)) {
-					thirdRoundAiSignsCount += 1
+				if ((x === 0 && y === 0) || (x === 1 && y === 2)) {
+					expect(game.hasAiSign(x, y)).toBeTruthy()
+
+					continue
 				}
 
 				if (
@@ -94,10 +64,100 @@ describe('game', () => {
 				}
 
 				expect(game.hasPlayerSign(x, y)).toBeFalsy()
+				expect(game.hasAiSign(x, y)).toBeFalsy()
 			}
 		}
 
-		expect(thirdRoundAiSignsCount).toBe(3)
+		expect(game.getWinner()).toBe('player')
+	})
+
+	it('should be the win by vertically', () => {
+		// x o -
+		// x - -
+		// x o -
+		const game = createGame()
+
+		game.movePlayer(0, 0)
+		game.moveAi(1, 0)
+
+		expect(game.getWinner()).toBeNull()
+
+		game.movePlayer(0, 1)
+		game.moveAi(1, 2)
+
+		expect(game.getWinner()).toBeNull()
+
+		game.movePlayer(0, 2)
+		game.moveAi(2, 2)
+
+		for (let x = 0; x < 3; x += 1) {
+			for (let y = 0; y < 3; y += 1) {
+				if ((x === 1 && y === 0) || (x === 1 && y === 2)) {
+					expect(game.hasAiSign(x, y)).toBeTruthy()
+
+					continue
+				}
+
+				if (
+					(x === 0 && y === 0) ||
+					(x === 0 && y === 1) ||
+					(x === 0 && y === 2)
+				) {
+					expect(game.hasPlayerSign(x, y)).toBeTruthy()
+
+					continue
+				}
+
+				expect(game.hasPlayerSign(x, y)).toBeFalsy()
+				expect(game.hasAiSign(x, y)).toBeFalsy()
+			}
+		}
+
+		expect(game.getWinner()).toBe('player')
+	})
+
+	it('should be the win by diagonally', () => {
+		// o - x
+		// - x -
+		// x - o
+		const game = createGame()
+
+		game.movePlayer(2, 0)
+		game.moveAi(0, 0)
+
+		expect(game.getWinner()).toBeNull()
+
+		game.movePlayer(1, 1)
+		game.moveAi(2, 2)
+
+		expect(game.getWinner()).toBeNull()
+
+		game.movePlayer(0, 2)
+		game.moveAi(1, 0)
+
+		for (let x = 0; x < 3; x += 1) {
+			for (let y = 0; y < 3; y += 1) {
+				if ((x === 0 && y === 0) || (x === 2 && y === 2)) {
+					expect(game.hasAiSign(x, y)).toBeTruthy()
+
+					continue
+				}
+
+				if (
+					(x === 2 && y === 0) ||
+					(x === 1 && y === 1) ||
+					(x === 0 && y === 2)
+				) {
+					expect(game.hasPlayerSign(x, y)).toBeTruthy()
+
+					continue
+				}
+
+				expect(game.hasPlayerSign(x, y)).toBeFalsy()
+				expect(game.hasAiSign(x, y)).toBeFalsy()
+			}
+		}
+
 		expect(game.getWinner()).toBe('player')
 	})
 })

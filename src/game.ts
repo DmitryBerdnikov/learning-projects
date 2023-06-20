@@ -1,77 +1,14 @@
-export const SIGN_X = 'x'
-export const SIGN_O = 'o'
-
-type Board = Array<Array<null | GameSign>>
-
-export const getRandomNumber = (min: number, max: number): number => {
-	return min + Math.floor(Math.random() * (max - min + 1))
-}
-
-const getHorizontalWinnerSign = (board: Board) => {
-	if (board[0][0] === board[0][1] && board[0][1] === board[0][2]) {
-		return board[0][0]
-	}
-
-	if (board[1][0] === board[1][1] && board[1][1] === board[1][2]) {
-		return board[1][0]
-	}
-
-	if (board[2][0] === board[2][1] && board[2][1] === board[2][2]) {
-		return board[2][0]
-	}
-
-	return null
-}
-
-const getVerticalWinnerSign = (board: Board) => {
-	if (board[0][0] === board[1][0] && board[0][0] === board[2][0]) {
-		return board[0][0]
-	}
-
-	if (board[0][1] === board[1][1] && board[0][1] === board[2][1]) {
-		return board[0][1]
-	}
-
-	if (board[0][2] === board[1][2] && board[0][2] === board[2][2]) {
-		return board[0][2]
-	}
-
-	return null
-}
-
-const getDiagonalWinnerSign = (board: Board) => {
-	if (board[0][0] === board[1][1] && board[0][0] === board[2][2]) {
-		return board[0][0]
-	}
-
-	if (board[0][2] === board[1][1] && board[0][2] === board[2][0]) {
-		return board[0][2]
-	}
-
-	return null
-}
-
-type GameSign = typeof SIGN_X | typeof SIGN_O
-
-type GameParams = {
-	playerSign?: GameSign
-}
-
-type Game = {
-	getPlayerSign: () => GameSign
-	getAiSign: () => GameSign
-	hasPlayerSign: (x: number, y: number) => boolean
-	hasAiSign: (x: number, y: number) => boolean
-	movePlayer: (x: number, y: number) => void
-	moveAi: (x: number, y: number) => void
-	getWinner: () => null | 'player' | 'ai'
-	getBoard: () => Board
-}
-
-type State = {
-	board: Board
-	winner: 'player' | 'ai' | null
-}
+import {
+	type Game,
+	type GameParams,
+	getDiagonalWinnerSign,
+	getHorizontalWinnerSign,
+	getRandomNumber,
+	getVerticalWinnerSign,
+	MovementErrorAfterGameOver,
+	type State,
+	WrongTurnError,
+} from './enitity'
 
 export const createGame = (params?: GameParams): Game => {
 	const config = params ?? {}
@@ -84,9 +21,10 @@ export const createGame = (params?: GameParams): Game => {
 			[null, null, null],
 		],
 		winner: null,
+		whosTurn: 'player',
 	}
 
-	const checkAndSetWinner = () => {
+	const updateWinnerState = () => {
 		const winnerSign =
 			getVerticalWinnerSign(state.board) ??
 			getHorizontalWinnerSign(state.board) ??
@@ -101,7 +39,11 @@ export const createGame = (params?: GameParams): Game => {
 
 	const getWinner = () => state.winner
 
-	const checkIfCanMove = () => getWinner() === null
+	const checkIfPlayerCanMove = () => state.whosTurn === 'player'
+
+	const checkIfAiCanMove = () => state.whosTurn === 'ai'
+
+	const checkIsGameOver = () => getWinner() !== null
 
 	const getPlayerSign = () => playerSign
 
@@ -115,8 +57,15 @@ export const createGame = (params?: GameParams): Game => {
 	const hasAiSign = (x: number, y: number) => state.board[y][x] === getAiSign()
 
 	const moveAi = (x?: number, y?: number) => {
-		if (!checkIfCanMove()) {
-			return
+		if (checkIsGameOver()) {
+			throw new MovementErrorAfterGameOver()
+		}
+
+		if (!checkIfAiCanMove()) {
+			throw new WrongTurnError({
+				actualTurn: 'ai',
+				expectedTurn: 'player',
+			})
 		}
 
 		const resolvedX = x ?? getRandomNumber(0, state.board.length - 1)
@@ -129,17 +78,26 @@ export const createGame = (params?: GameParams): Game => {
 		}
 
 		state.board[resolvedY][resolvedX] = getAiSign()
-		checkAndSetWinner()
+		state.whosTurn = 'player'
+		updateWinnerState()
 	}
 
 	const movePlayer = (x: number, y: number) => {
-		if (!checkIfCanMove()) {
-			return
+		if (checkIsGameOver()) {
+			throw new MovementErrorAfterGameOver()
 		}
 
-		if (!state.board[y][x]) {
+		if (!checkIfPlayerCanMove()) {
+			throw new WrongTurnError({
+				actualTurn: 'player',
+				expectedTurn: 'ai',
+			})
+		}
+
+		if (state.board[y][x] === null) {
 			state.board[y][x] = getPlayerSign()
-			checkAndSetWinner()
+			state.whosTurn = 'ai'
+			updateWinnerState()
 		}
 	}
 

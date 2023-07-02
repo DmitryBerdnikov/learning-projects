@@ -2,12 +2,19 @@ name: Main CI
 
 on:
   pull_request:
-    branches: ['tic-tac-toe']
+    branches: [tic-tac-toe]
   push:
-    branches: ['tic-tac-toe']
+    branches: [tic-tac-toe]
+
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  pages: write
+  repository-projects: write
 
 jobs:
-  bump:
+  main:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -26,4 +33,4 @@ jobs:
       - name: Generating coverage badges
         uses: jpb06/jest-badges-action@latest
         with:
-          branches: 'tic-tac-toe'
+          branches: tic-tac-toe

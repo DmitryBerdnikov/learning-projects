@@ -2,20 +2,28 @@ name: Main CI
 
 on:
   pull_request:
-    branches: [ 'tic-tac-toe' ]
-  merge_group:
-    branches: [ 'tic-tac-toe' ]
+    branches: ['tic-tac-toe']
+  push:
+    branches: ['tic-tac-toe']
 
 jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
-    # Necessary to push the generated badges to the repo
-    - name: Check out repository code
-      uses: actions/checkout@v3
-    # Necessary to generate the coverage report.
-    # Make sure to add 'json-summary' to the coverageReporters in jest options
-    - name: Tests
-      run: npm run test:ci
-    - name: Generating coverage badges
-      uses: jpb06/jest-badges-action@latest
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
+
+      - name: Installing dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Tests
+        run: npm run test:ci
+
+      - name: Generating coverage badges
+        uses: jpb06/jest-badges-action@latest
+        with:
+          branches: 'tic-tac-toe'

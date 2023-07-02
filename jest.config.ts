@@ -6,6 +6,7 @@ const config: Config = {
 	transform: {
 		'^.+\\.ts$': 'ts-jest',
 	},
+	coverageReporters: ['json-summary'],
 }
 
 export default config

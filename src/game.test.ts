@@ -42,7 +42,7 @@ describe('rules of the game', () => {
 		game.moveAi(0, 1)
 
 		game.movePlayer(1, 0)
-		game.moveAi(0, 1)
+		game.moveAi(0, 2)
 
 		game.movePlayer(2, 0)
 

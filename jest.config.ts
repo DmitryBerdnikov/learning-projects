@@ -7,6 +7,11 @@ const config: Config = {
 		'^.+\\.ts$': 'ts-jest',
 	},
 	coverageReporters: ['json-summary'],
+	coverageThreshold: {
+		global: {
+			lines: 80,
+		},
+	},
 }
 
 export default config

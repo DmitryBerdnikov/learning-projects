@@ -6,7 +6,6 @@ const config: Config = {
 	transform: {
 		'^.+\\.ts$': 'ts-jest',
 	},
-	coverageReporters: ['json-summary'],
 	coverageThreshold: {
 		global: {
 			lines: 80,

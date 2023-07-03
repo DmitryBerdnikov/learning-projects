@@ -1,4 +1,4 @@
-name: Main CI
+name: Tic Tac Toe
 
 on:
   pull_request:
@@ -7,11 +7,7 @@ on:
     branches: [tic-tac-toe]
 
 permissions:
-  actions: write
-  checks: write
   contents: write
-  pages: write
-  repository-projects: write
 
 jobs:
   main:

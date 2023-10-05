@@ -1,46 +1,48 @@
 {
-  "name": "tic-tac-toe",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "webpack",
-    "build": "webpack --env mode=production",
-    "test": "jest",
+	"name": "tic-tac-toe",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "webpack",
+		"build": "webpack --env mode=production",
+		"test": "jest",
 		"test:coverage": "jest --coverage",
 		"test:ci": "jest --ci --coverage --coverageReporters='json-summary'",
-    "lint:ts": "eslint \"**/*.ts\"",
-    "lint:ts:fix": "eslint \"**/*.ts\" --fix",
-    "prepare": "node ./npmScriptsPrepare.js",
+		"type-check": "tsc --noEmit",
+		"lint:js": "eslint \"**/*.{js,ts}\"",
+		"lint:js:fix": "eslint \"**/*.{js,ts}\" --fix",
+		"prepare": "node ./npmScriptsPrepare.js",
 		"pre-commit": "lint-staged"
-  },
-  "license": "ISC",
-  "devDependencies": {
-    "@csssr/linters": "^0.1.1",
-    "@types/jest": "^29.5.1",
-    "@types/node": "^20.1.4",
-    "@types/webpack": "^5.28.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.5",
-    "eslint": "^8.40.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-unicorn": "^47.0.0",
-    "html-webpack-plugin": "^5.5.1",
-    "husky": "^8.0.3",
-    "jest": "^29.5.0",
-    "lint-staged": "^13.2.2",
-    "prettier": "^2.8.8",
-    "ts-jest": "^29.1.0",
-    "ts-loader": "^9.4.2",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
-    "webpack": "^5.82.1",
-    "webpack-cli": "^5.1.1"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
-  }
+	},
+	"license": "ISC",
+	"devDependencies": {
+		"@csssr/linters": "^0.1.1",
+		"@types/jest": "^29.5.5",
+		"@types/node": "^20.8.2",
+		"@types/webpack": "^5.28.3",
+		"@typescript-eslint/eslint-plugin": "^6.7.4",
+		"@typescript-eslint/parser": "^6.7.4",
+		"eslint": "^8.50.0",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-prettier": "^5.0.0",
+		"eslint-plugin-promise": "^6.1.1",
+		"eslint-plugin-unicorn": "^48.0.1",
+		"html-webpack-plugin": "^5.5.3",
+		"husky": "^8.0.3",
+		"jest": "^29.7.0",
+		"lint-staged": "^14.0.1",
+		"prettier": "^3.0.3",
+		"ts-jest": "^29.1.1",
+		"ts-loader": "^9.4.4",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.2.2",
+		"webpack": "^5.88.2",
+		"webpack-cli": "^5.1.4"
+	},
+	"lint-staged": {
+		"*.{js,ts}": [
+			"prettier --write",
+			"eslint --fix"
+		]
+	}
 }

@@ -8,7 +8,7 @@ import {
 	MovementErrorAfterGameOver,
 	type State,
 	WrongTurnError,
-} from './enitity'
+} from './entity'
 
 export const createGame = (params?: GameParams): Game => {
 	const config = params ?? {}

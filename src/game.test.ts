@@ -3,7 +3,7 @@ import {
 	SIGN_O,
 	SIGN_X,
 	WrongTurnError,
-} from './enitity'
+} from './entity'
 import { createGame } from './game'
 
 describe('players signs', () => {

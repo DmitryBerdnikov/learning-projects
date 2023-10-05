@@ -1,5 +1,6 @@
 import {
 	MovementErrorAfterGameOver,
+	MovementErrorTwiceAlongTheSameCoordinates,
 	SIGN_O,
 	SIGN_X,
 	WrongTurnError,
@@ -25,6 +26,31 @@ describe('players signs', () => {
 })
 
 describe('rules of the game', () => {
+	it('should be an error if moving to the same coordinates twice', () => {
+		const game = createGame({
+			playerSign: SIGN_X,
+		})
+
+		game.movePlayer(0, 0)
+		expect(game.moveAi.bind(null, 0, 0)).toThrow(
+			MovementErrorTwiceAlongTheSameCoordinates
+		)
+
+		game.moveAi(0, 1)
+
+		expect(game.movePlayer.bind(null, 0, 1)).toThrow(
+			MovementErrorTwiceAlongTheSameCoordinates
+		)
+
+		game.movePlayer(0, 2)
+
+		expect(game.getBoard()).toEqual([
+			[SIGN_X, null, null],
+			[SIGN_O, null, null],
+			[SIGN_X, null, null],
+		])
+	})
+
 	it('should be no more than one movement at a time for a participant in the game', () => {
 		const game = createGame()
 

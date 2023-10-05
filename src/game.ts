@@ -6,6 +6,7 @@ import {
 	getRandomNumber,
 	getVerticalWinnerSign,
 	MovementErrorAfterGameOver,
+	MovementErrorTwiceAlongTheSameCoordinates,
 	type State,
 	WrongTurnError,
 } from './entity'
@@ -68,6 +69,15 @@ export const createGame = (params?: GameParams): Game => {
 			})
 		}
 
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+		const hasX = x || x === 0
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+		const hasY = y || y === 0
+
+		if (hasX && hasY && state.board[y][x] !== null) {
+			throw new MovementErrorTwiceAlongTheSameCoordinates()
+		}
+
 		const resolvedX = x ?? getRandomNumber(0, state.board.length - 1)
 		const resolvedY = y ?? getRandomNumber(0, state.board[0].length - 1)
 
@@ -94,11 +104,13 @@ export const createGame = (params?: GameParams): Game => {
 			})
 		}
 
-		if (state.board[y][x] === null) {
-			state.board[y][x] = getPlayerSign()
-			state.whosTurn = 'ai'
-			updateWinnerState()
+		if (state.board[y][x] !== null) {
+			throw new MovementErrorTwiceAlongTheSameCoordinates()
 		}
+
+		state.board[y][x] = getPlayerSign()
+		state.whosTurn = 'ai'
+		updateWinnerState()
 	}
 
 	return {

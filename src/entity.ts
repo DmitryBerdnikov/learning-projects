@@ -50,6 +50,13 @@ export class MovementErrorAfterGameOver extends Error {
 	}
 }
 
+export class MovementErrorTwiceAlongTheSameCoordinates extends Error {
+	constructor() {
+		super('Can not make a movement twice along the same coordinates')
+		this.name = 'MovementErrorTwiceAlongTheSameCoordinates'
+	}
+}
+
 export const getRandomNumber = (min: number, max: number): number => {
 	return min + Math.floor(Math.random() * (max - min + 1))
 }
